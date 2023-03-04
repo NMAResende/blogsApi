@@ -6,9 +6,9 @@ const createLogin = async ({ email, password }) => {
   const error = schema.validateEmailPassword.validate({ email, password });
   if (error.type) return error;
 
-  const newUser = await User.create({ email, password });
+  const login = await User.findOne({ email, password });
 
-  return newUser;
+  return login;
 };
 
 module.exports = {

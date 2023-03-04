@@ -23,7 +23,6 @@ allowNull: false,
 type: Sequelize.STRING,
 },
 image: {
-allowNull: false,
 type: Sequelize.STRING,
 }
 });
