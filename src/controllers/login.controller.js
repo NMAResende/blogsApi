@@ -12,7 +12,6 @@ const createLogin = async (req, res) => {
     }
 
     const login = await loginService.createLogin({ email, password });
-    console.log(login);
 
     if (!login) {
       return res.status(400).json({ message: 'Invalid fields' });
