@@ -23,8 +23,9 @@ const getUser = async () => {
   return users;
 };
 
-const getUserById = async (id) => {
-  const user = await User.findByPk({ where: { id }, attributes: { exclude: 'password' } });
+const getUserById = async ({ id }) => {
+  console.log(id);
+  const user = await User.findOne({ where: { id }, attributes: { exclude: 'password' } });
 
   return user;
 };
