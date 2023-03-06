@@ -22,4 +22,8 @@ userRouter.get('/',
 validateToken,
 userController.getUser);
 
+userRouter.delete('/me',
+validateToken,
+userController.deleteUser);
+
 module.exports = userRouter;

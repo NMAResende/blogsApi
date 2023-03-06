@@ -24,8 +24,14 @@ const getUser = async () => {
 };
 
 const getUserById = async ({ id }) => {
-  console.log(id);
+  // console.log(id);
   const user = await User.findOne({ where: { id }, attributes: { exclude: 'password' } });
+
+  return user;
+};
+
+const deleteUser = async ({ id }) => {
+  const user = await User.destroy({ where: { id } });
 
   return user;
 };
@@ -35,4 +41,5 @@ module.exports = {
   createUser,
   getUser,
   getUserById,
+  deleteUser,
 };
