@@ -11,4 +11,8 @@ validateName,
 validateToken, 
 categoryController.createCategory);
 
+categoryRouter.get('/',  
+validateToken, 
+categoryController.getCategory);
+
 module.exports = categoryRouter;
