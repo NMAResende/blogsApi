@@ -27,7 +27,7 @@ const getUser = async (_req, res) => {
 
   if (!users) return res.status(401).json({ message: 'Users not found' });
 
-  return res.status(200).json({ users });
+  return res.status(200).json(users);
 };
 
 const getUserById = async (req, res) => {
