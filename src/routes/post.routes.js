@@ -15,4 +15,8 @@ blogRouter.get('/',
 validateToken, 
 blogController.getPostUserCategory);
 
+blogRouter.get('/:id', 
+validateToken,
+blogController.getPostUserCategoryById);
+
 module.exports = blogRouter;

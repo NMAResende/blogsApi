@@ -37,7 +37,25 @@ const getPostUserCategory = async () => {
   return listPost;
 };
 
+const getPostUserCategoryById = async (id) => {
+  const postById = await BlogPost.findOne({
+    where: { id },
+    include: [
+    { model: User, 
+      as: 'user', 
+      attributes: ['id', 'displayName', 'email', 'image'] },
+      { model: Category,
+        as: 'categories',
+        through: { attributes: [] },
+      },
+    ],
+  });
+
+  return postById;
+};
+
 module.exports = {
   createBlog,
   getPostUserCategory,
+  getPostUserCategoryById,
 };
