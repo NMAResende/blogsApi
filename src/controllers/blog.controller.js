@@ -5,7 +5,7 @@ const categoryService = require('../services/category.service');
 const createBlog = async (req, res) => {
   const { id } = req.data;
   const { title, content, categoryIds } = req.body;
-  console.log({ title, content, categoryIds });
+  // console.log({ title, content, categoryIds });
 
   const ifCategoryExist = await Promise.all(categoryIds
   .map(async (categoryid) => categoryService.getCategoryById(categoryid)));
@@ -51,7 +51,7 @@ const updatePost = async (req, res) => {
   const { id } = req.params;
   const { title, content } = req.body;
 
-  const user = await blogService.getPostUserCategoryById(id);
+  const user = await blogService.getPostUserCategoryById(userId);
   console.log(user);
   if (user.userId !== userId) {
      return res.status(401).json({ message: 'Unauthorized user' }); 
@@ -59,7 +59,7 @@ const updatePost = async (req, res) => {
 
   const updatedPost = await blogService.updatePost({ id, title, content });
 
-  if (!updatedPost) return res.status(400).json('Post not update');
+  if (!updatedPost) return res.status(404).json('Post does not exist');
 
   return res.status(200).json(updatedPost);
 };

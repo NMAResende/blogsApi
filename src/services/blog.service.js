@@ -60,18 +60,11 @@ const updatePost = async ({ id, title, content }) => {
   const updatedPost = await BlogPost.update(
     { title, content }, 
     { where: { id },
-    include: [
-      { model: User, 
-        as: 'user', 
-        attributes: ['id', 'displayName', 'email', 'image'] },
-        { model: Category,
-          as: 'categories',
-          through: { attributes: [] },
-        },
-      ],
-},
-);
-return updatedPost;
+    },
+  );
+  const update = await getPostUserCategoryById(updatedPost);
+  
+ return update;
 };
 
 const deletePost = async (id) => {
