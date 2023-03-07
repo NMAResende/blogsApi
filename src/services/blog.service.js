@@ -54,8 +54,34 @@ const getPostUserCategoryById = async (id) => {
   return postById;
 };
 
+const updatePost = async ({ id, title, content }) => {
+  const updatedPost = await BlogPost.update(
+    { title, content }, 
+    { where: { id },
+    include: [
+      { model: User, 
+        as: 'user', 
+        attributes: ['id', 'displayName', 'email', 'image'] },
+        { model: Category,
+          as: 'categories',
+          through: { attributes: [] },
+        },
+      ],
+},
+);
+return updatedPost;
+};
+
+const deletePost = async (id) => {
+  const post = await BlogPost.destroy({ where: { id } });
+
+  return post;
+};
+
 module.exports = {
   createBlog,
   getPostUserCategory,
   getPostUserCategoryById,
+  updatePost,
+  deletePost,
 };

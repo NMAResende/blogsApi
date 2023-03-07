@@ -31,8 +31,45 @@ if (!postById) return res.status(404).json({ message: 'Post does not exist' });
 return res.status(200).json(postById);
 };
 
+const updatePost = async (req, res) => {
+  const userId = req.data.id;
+  const { id } = req.params;
+  const { title, content } = req.body;
+
+  const user = await blogService.getPostUserCategoryById(id);
+  console.log(user);
+  if (user.userId !== userId) {
+     return res.status(401).json({ message: 'Unauthorized user' }); 
+  }
+
+  const updatedPost = await blogService.updatePost({ id, title, content });
+
+  if (!updatedPost) return res.status(400).json('Post not update');
+
+  return res.status(200).json(updatedPost);
+};
+
+const deletePost = async (req, res) => {
+  const userId = req.data.id;
+  const { id } = req.params;
+
+  const user = await blogService.getPostUserCategoryById(id);
+  console.log(user);
+  if (user.userId !== userId) {
+     return res.status(401).json({ message: 'Unauthorized user' }); 
+  }
+
+  const post = await blogService.deletePost(id);
+
+  if (!post) return res.status(404).json({ message: 'Post does not exist' });
+
+  return res.status(204).end();
+};
+
 module.exports = {
   createBlog,
   getPostUserCategory,
   getPostUserCategoryById,
+  updatePost,
+  deletePost,
 };
