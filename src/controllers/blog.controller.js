@@ -1,10 +1,25 @@
 const blogService = require('../services/blog.service');
 
+const categoryService = require('../services/category.service');
+
 const createBlog = async (req, res) => {
   const { id } = req.data;
   const { title, content, categoryIds } = req.body;
+  console.log({ title, content, categoryIds });
+
+  const ifCategoryExist = await Promise.all(categoryIds
+  .map(async (categoryid) => categoryService.getCategoryById(categoryid)));
+
+  // console.log(ifCategoryExist);
+
+  if (ifCategoryExist.includes(null)) {
+ return res.status(400).json({
+    message: 'one or more "categoryIds" not found', 
+  }); 
+}
   
-  const newBlog = await blogService.createBlog({ id, title, content, categoryIds });
+  const newBlog = await blogService.createBlog({ 
+    title, content, id, categoryIds });
 
   if (!newBlog) {
     return res.status(400).json({ message: 'Problem in post' });

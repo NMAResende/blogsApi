@@ -3,9 +3,9 @@ const { BlogPost, User, Category, PostCategory } = require('../models');
 const schema = require('./validations/schema');
 
 const createPostCategory = async ({ postId, categoryIds }) => {
-  const tableIds = await categoryIds
-    .map((categoryId) => PostCategory.create({ postId, categoryId }));
-
+  const tableIds = await Promise.all(categoryIds
+    .map((categoryId) => PostCategory.create({ postId, categoryId })));
+    
   return tableIds;
 };
 
@@ -15,10 +15,12 @@ const createBlog = async ({ title, content, id, categoryIds }) => {
 
   const newBlog = await BlogPost.create({ 
     title, content, userId: id, published: new Date(), updated: new Date() });
-
+ 
   const postsCategories = await createPostCategory({ postId: newBlog.id, categoryIds });
 
-  return postsCategories;
+  await Promise.all(postsCategories);
+
+  return newBlog;
 };
 
 const getPostUserCategory = async () => {
