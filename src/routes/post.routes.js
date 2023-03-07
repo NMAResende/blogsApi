@@ -12,13 +12,17 @@ validateToken,
 validateBlog,
 blogController.createBlog);
 
-blogRouter.get('/', 
-validateToken, 
-blogController.getPostUserCategory);
+blogRouter.get('/search', 
+validateToken,
+blogController.searchPost);
 
 blogRouter.get('/:id', 
 validateToken,
 blogController.getPostUserCategoryById);
+
+blogRouter.get('/', 
+validateToken, 
+blogController.getPostUserCategory);
 
 blogRouter.put('/:id', 
 validateToken,

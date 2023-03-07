@@ -66,10 +66,25 @@ const deletePost = async (req, res) => {
   return res.status(204).end();
 };
 
+const searchPost = async (req, res) => {
+  const { q } = req.query;
+
+  const listPost = await blogService.getPostUserCategory();
+
+  if (!q) return res.status(200).json(listPost);
+
+  const search = await blogService.searchPost(q);
+
+  if (!search) return res.status(200).json([]);
+
+  return res.status(200).json(search);
+};
+
 module.exports = {
   createBlog,
   getPostUserCategory,
   getPostUserCategoryById,
   updatePost,
   deletePost,
+  searchPost,
 };
