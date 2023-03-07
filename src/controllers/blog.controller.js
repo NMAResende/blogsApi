@@ -52,7 +52,7 @@ const updatePost = async (req, res) => {
   const { title, content } = req.body;
 
   const user = await blogService.getPostUserCategoryById(userId);
-  console.log(user);
+
   if (user.userId !== userId) {
      return res.status(401).json({ message: 'Unauthorized user' }); 
   }
@@ -68,8 +68,8 @@ const deletePost = async (req, res) => {
   const userId = req.data.id;
   const { id } = req.params;
 
-  const user = await blogService.getPostUserCategoryById(id);
-  console.log(user);
+  const user = await blogService.getPostUserCategoryById(userId);
+  
   if (user.userId !== userId) {
      return res.status(401).json({ message: 'Unauthorized user' }); 
   }
