@@ -11,6 +11,8 @@ validateToken,
 validateBlog,
 blogController.createBlog);
 
-blogRouter.get('/', blogController.getPostUserCategory);
+blogRouter.get('/', 
+validateToken, 
+blogController.getPostUserCategory);
 
 module.exports = blogRouter;

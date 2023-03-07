@@ -21,21 +21,16 @@ const createBlog = async ({ title, content, id, categoryIds }) => {
   return postsCategories;
 };
 
-// const createPost = async ({ postId, categoryId }) => {
-//   const newPost = await PostCategory.create({ postId, categoryId });
-
-//   return newPost;
-// };
-
 const getPostUserCategory = async () => {
   const listPost = await BlogPost.findAll({
     include: [
     { model: User, 
-      as: 'users', 
-      attributes: ['displayName', 'email', 'image'] },
+      as: 'user', 
+      attributes: ['id', 'displayName', 'email', 'image'] },
       { model: Category,
         as: 'categories',
-        through: PostCategory },
+        through: { attributes: [] },
+      },
     ],
   });
 

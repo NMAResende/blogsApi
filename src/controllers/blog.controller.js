@@ -13,10 +13,10 @@ const createBlog = async (req, res) => {
   return res.status(201).json(newBlog);
 };
 
-const getPostUserCategory = async (req, res) => {
+const getPostUserCategory = async (_req, res) => {
   const listPost = await blogService.getPostUserCategory();
 
-  if (!listPost) return res.status(400).json({ message: 'Post not found' });
+  if (!listPost) return res.status(401).json({ message: 'Post not found' });
 
   return res.status(200).json(listPost);
 };
